@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, TouchableOpacity, Text, ScrollView} from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native';
 import Message from './HelperComponents/Message'
 import { useNavigation } from '@react-navigation/native';
+import { clearlocalNotofication, setLocalNotification } from '../utils/helper'
 
 function Quiz(props) {
 
@@ -55,6 +56,9 @@ function Quiz(props) {
                 </View>
             )
         } else {
+
+            clearlocalNotofication().then(setLocalNotification)
+
             return (
                 <View>
                     <View style={{ paddingTop: 40 }}>

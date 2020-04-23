@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react'
-import { ScrollView, StyleSheet, Platform } from 'react-native'
+import { ScrollView, StyleSheet, Platform, View, TouchableOpacity } from 'react-native'
 import { getDecksData } from '../utils/helper'
 import { useDispatch, useSelector } from 'react-redux'
 import { receiveDecks } from '../actions/decks'
-import { teal } from '../utils/colors'
+import { teal, orange } from '../utils/colors'
 import Message from './HelperComponents/Message'
 import DecksList from './DecksList'
+import { useNavigation } from '@react-navigation/native';
 
 const Dashboard = () => {
     const dispatch = useDispatch()
     const decks = useSelector(state => state)
+    const navigation = useNavigation();
+
 
     useEffect(() => {
         if (Object.keys(decks).length === 0) {
@@ -25,8 +28,18 @@ const Dashboard = () => {
     return (
         <ScrollView style={{ flex: 1 }} >
             {
-                Object.keys(decks) === 0 ? <Message message={'No Decks available'} /> :
-                    <DecksList />
+                Object.keys(decks).length === 0 ?
+                    <View>
+                        <View style={styles.item}>
+                            <Message message={'No Decks Created'} />
+                        </View>
+                        <View style={styles.itemAdd}>
+                            <TouchableOpacity onPress={() => navigation.navigate('Add Deck')} >
+                                <Message message={'Add Card'} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    : <DecksList />
             }
 
         </ScrollView>
@@ -51,6 +64,15 @@ const styles = StyleSheet.create({
             width: 0,
             height: 3
         },
+    },
+    itemAdd: {
+        padding: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 17,
+        textAlign: 'center',
+        justifyContent: 'center',
+        backgroundColor: orange
     },
     noDataText: {
         fontSize: 20,

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import Dashboard from './components/Dashboard'
 import AddDeck from './components/AddDeck'
@@ -14,6 +14,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { setLocalNotification } from './utils/helper'
 
 const Tab = Platform.OS === 'ios' ? createBottomTabNavigator() : createMaterialTopTabNavigator()
 const Stack = createStackNavigator();
@@ -27,6 +28,12 @@ const tabs = () => {
   )
 }
 export default function App() {
+
+  useEffect(() => {
+    setLocalNotification()
+  })
+
+
   return (
     <Provider store={createStore(reducer)}>
       <View style={{ flex: 1 }}>
