@@ -1,7 +1,8 @@
 import { AsyncStorage } from 'react-native'
-import { DB_KEY } from './helper'
 
-export const addDeck = (deck) => {
+export const DB_KEY = 'flashcard_app'
+
+export const addDeckDB = (deck) => {
     return AsyncStorage.mergeItem(DB_KEY, JSON.stringify({
         [deck.id]: deck
     }))
@@ -16,6 +17,16 @@ export function removeDeck(key) {
             AsyncStorage.setItem(DB_KEY, JSON.stringify(data))
         }
         )
+}
+
+export const addNewCardDB = (deckid, card) => {
+    console.log(deckid,card)
+    return getAllDecks()
+        .then((results) => {
+            const decks = JSON.parse(results)
+            decks[deckid].cards.push(card);
+            AsyncStorage.mergeItem(DB_KEY, JSON.stringify(decks));
+        });
 }
 
 export function getAllDecks() {

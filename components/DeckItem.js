@@ -1,16 +1,20 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux'
 
 import { white } from '../utils/colors'
 
 const DeckItem = (props) => {
 
-    const [deck] = useState(props.deck);
+    const [deckid] = useState(props.deckid);
     const navigation = useNavigation();
+    const decks = useSelector(state => state)
+    const deck = decks[deckid]
+
     return (
         <View>
-            <TouchableOpacity onPress={() => navigation.navigate('DeckDetails', { deck: deck })} >
+            <TouchableOpacity onPress={() => navigation.navigate('DeckDetails', { deckid: deck.id })} >
                 <View style={styles.item}>
                     <Text style={styles.info}>{deck.name}</Text>
                     <Text style={styles.infoCards}>{deck.cards.length} cards</Text>

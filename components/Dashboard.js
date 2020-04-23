@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
-import { Text, View, ScrollView, StyleSheet,Platform } from 'react-native'
+import { ScrollView, StyleSheet, Platform } from 'react-native'
 import { getDecksData } from '../utils/helper'
 import { useDispatch, useSelector } from 'react-redux'
 import { receiveDecks } from '../actions/decks'
-import DeckItem from './DeckItem'
-import { white,teal } from '../utils/colors'
+import { teal } from '../utils/colors'
 import Message from './HelperComponents/Message'
+import DecksList from './DecksList'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -14,7 +14,7 @@ const Dashboard = () => {
     useEffect(() => {
         if (Object.keys(decks).length === 0) {
             getDecksData().then((decks) => {
-                dispatch(receiveDecks(decks))
+                dispatch(receiveDecks(JSON.parse(decks)))
             }
             ).catch(error => {
                 console.log(error);
@@ -25,10 +25,8 @@ const Dashboard = () => {
     return (
         <ScrollView style={{ flex: 1 }} >
             {
-                Object.keys(decks).length === 0 ? <Message message={'No Decks available'} /> :
-                    Object.values(decks).map((deck) => {
-                        return <DeckItem deck={deck} key={deck.id} />
-                    })
+                Object.keys(decks) === 0 ? <Message message={'No Decks available'} /> :
+                    <DecksList />
             }
 
         </ScrollView>

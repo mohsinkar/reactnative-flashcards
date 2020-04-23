@@ -14,7 +14,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import FloatingAction from './components/HelperComponents/HomeActionButton'
 
 const Tab = Platform.OS === 'ios' ? createBottomTabNavigator() : createMaterialTopTabNavigator()
 const Stack = createStackNavigator();
@@ -38,11 +37,18 @@ export default function App() {
             <Stack.Screen name="DeckDetails" component={DeckDetails} options={{
               title: 'Deck Details',
             }} />
-            <Stack.Screen name="Quiz" component={Quiz} options={{ title: 'Quiz' }} />
-            <Stack.Screen name="AddCard" component={AddCard} options={{ title: 'Add New Card' }} />
+            <Stack.Screen name="Quiz" component={Quiz} options={({ route }) => ({
+              title: route.params.name, headerStyle: {
+                backgroundColor: '#fff',
+              }
+            })} />
+            <Stack.Screen name="AddCard" component={AddCard} options={({ route }) => ({
+              title: route.params.name, headerStyle: {
+                backgroundColor: '#fff',
+              }
+            })} />
           </Stack.Navigator>
         </NavigationContainer>
-        <FloatingAction />
       </View>
     </Provider>
   );

@@ -1,7 +1,8 @@
 import { uuid } from 'uuidv4';
+import {getAllDecks} from './api'
 
 
-export const DB_KEY = 'flashcard_app'
+
 
 const decks = {
     deckid: {
@@ -35,9 +36,10 @@ const decks = {
 }
 // Function to reterieve the Decks  from the application storage
 export function getDecksData() {
-    return new Promise((res) => {
+    /*return new Promise((res) => {
         setTimeout(() => res({ ...decks }), 100)
-    })
+    })*/
+    return getAllDecks()
 }
 
 export function generateDeckKey () {

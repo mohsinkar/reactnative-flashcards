@@ -1,15 +1,43 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text, Platform, TextInput, KeyboardAvoidingView } from 'react-native';
 import Message from './HelperComponents/Message'
+import { white } from '../utils/colors'
+import { addNewCardDB } from '../utils/api'
+import { useDispatch } from 'react-redux'
+import { newCard } from '../actions/decks'
+import { useNavigation } from '@react-navigation/native';
 
 
-function AddCard() {
-   
-    const [question, onChangeQuestion] = useState('');
-    const [answer, onChangeAnswer] = useState('');
+const AddCard = (props) => {
+
+    const dispatch = useDispatch()
+    const navigation = useNavigation();
+    const [question, setQuestion] = useState('');
+    const [answer, setAnswer] = useState('');
+    const [deck] = useState(props.route.params.deck);
+
+    const _handleAlert = () => {
+        return (Alert.alert(
+            "Invalid Card Q&A",
+            "Card Q&A should be atleast 1 character",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+            { cancelable: false }
+        ))
+    }
+
 
     const handleSubmit = () => {
-        console.log(question, answer)
+        if (question.length < 1 || answer.length < 1) {
+            _handleAlert()
+            return
+        }
+        addNewCardDB(deck.id,{question, answer}) //Call Add Card API addNewCardDB(deck)
+        dispatch(newCard(deck.id, question, answer)) // Update Redux
+        setQuestion("") //reset 
+        setAnswer("")
+        navigation.navigate('DeckDetails', { deck: deck })  //navigate to the deck details
     }
 
     return (
@@ -18,7 +46,7 @@ function AddCard() {
             <View style={styles.bottom}>
                 <TextInput
                     style={{ width: 300, height: 40, fontSize: 15, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={text => onChangeQuestion(text)}
+                    onChangeText={text => setQuestion(text)}
                     value={question} placeholder="e.g. What are components"
                 />
             </View>
@@ -26,7 +54,7 @@ function AddCard() {
             <View style={styles.bottom} >
                 <TextInput
                     style={{ width: 300, height: 40, fontSize: 15, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={text => onChangeAnswer(text)}
+                    onChangeText={text => setAnswer(text)}
                     value={answer} placeholder="e.g. What are components"
                 />
             </View>
@@ -45,9 +73,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
+        backgroundColor: white,
     },
     bottom: {
-        paddingBottom:30,
+        paddingBottom: 30,
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
@@ -59,7 +88,11 @@ const styles = StyleSheet.create({
         paddingRight: 60,
         color: '#fff',
         fontSize: 22
-    }
+    }, info: {
+        fontSize: 25,
+        paddingTop: 5,
+
+    },
 })
 
 

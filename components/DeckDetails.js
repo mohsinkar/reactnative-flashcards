@@ -1,33 +1,37 @@
 import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { lightPurp, white, purple } from '../utils/colors'
+import { white } from '../utils/colors'
+import { useSelector } from 'react-redux'
 
 
 const DeckDetails = (props) => {
 
     const navigation = useNavigation();
-    const [deck] = useState(props.route.params.deck);
+    const [deckid] = useState(props.route.params.deckid);
+    const decks = useSelector(state => state)
+    const deck = decks[deckid]
 
     return (
-        <View style={{ backgroundColor:white,flex:1 }}>
+        <View style={{ backgroundColor: white, flex: 1 }}>
             <View style={styles.item}>
                 <Text style={styles.info}>{deck.name}</Text>
                 <Text style={styles.infoCards}>{deck.cards.length} cards</Text>
             </View>
-           
+
             <View style={styles.container}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('AddCard', { deck: deck })}>
+                    onPress={() => navigation.navigate('AddCard', { deck: deck, name: deck.name })}>
                     <Text style={styles.text} >Add Card</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.container}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Quiz', { deck: deck })}>
+                    onPress={() => navigation.navigate('Quiz', { deck: deck, name: `${deck.name} - Quiz` })}>
                     <Text style={styles.text} >Start Quiz</Text>
                 </TouchableOpacity>
             </View>
+
         </View>
     )
 }
@@ -35,7 +39,7 @@ const DeckDetails = (props) => {
 const styles = StyleSheet.create({
     spacer: {
         paddingBottom: 50,
-        backgroundColor:white
+        backgroundColor: white
     },
     container: {
         borderRadius: Platform.OS === 'ios' ? 16 : 20,
@@ -50,6 +54,13 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 1,
         elevation: 1,
+    },
+    removeContainer: {
+        marginLeft: 50,
+        marginRight: 50,
+        marginTop: 30,
+        borderBottomWidth: 0,
+        alignItems: 'center',
     },
     text: {
         borderWidth: 1,
@@ -80,6 +91,10 @@ const styles = StyleSheet.create({
     },
     infoCards: {
         fontSize: 20,
+    },
+    alert: {
+        fontSize: 20,
+        color: 'red'
     }
 })
 

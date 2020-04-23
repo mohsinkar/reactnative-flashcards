@@ -1,15 +1,21 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text, Platform, TextInput, KeyboardAvoidingView, Alert } from 'react-native';
 import Message from './HelperComponents/Message'
-
+import {addDeckDB} from '../utils/api'
+import {generateDeckKey} from '../utils/helper'
+import { useDispatch } from 'react-redux'
+import { addDeck } from '../actions/decks'
+import { useNavigation } from '@react-navigation/native';
 
 const AddDeck = () => {
+    const dispatch = useDispatch()
+    const navigation = useNavigation();
 
-    const [deckName, onChangeName] = useState('');
+    const [deckName, setDeckName] = useState('');
     const _handleAlert = () => {
         return (Alert.alert(
             "Invalid Deck Name",
-            "Deck Name Should be atleast 2 characters",
+            "Deck name should be atleast 2 characters",
             [
                 { text: "OK", onPress: () => console.log("OK Pressed") }
             ],
@@ -17,16 +23,25 @@ const AddDeck = () => {
         ))
     }
 
+    /** setup deck Object skeleton */
+    const buildDeck = () => {
+        return {
+            id: generateDeckKey(),
+            name: deckName,
+            cards : []
+        }
+    }
+
     const handleSubmit = () => {
         if (deckName.length < 2) {  
             _handleAlert() 
             return
         }
-
-        //Call Add Deck API
-
-        // Update Redux
-
+        deck = buildDeck()
+        addDeckDB(deck) //Call Add Deck API addDeckDB(deck)
+        dispatch(addDeck(deck)) // Update Redux
+        setDeckName("") //reset 
+        navigation.navigate('DeckDetails', { deck: deck })  //navigate to the deck details
     }
 
     return (
@@ -35,7 +50,7 @@ const AddDeck = () => {
             <View style={styles.bottom}>
                 <TextInput
                     style={{ width: 300, height: 50, fontSize: 22, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={text => onChangeName(text)}
+                    onChangeText={text => setDeckName(text)}
                     value={deckName} placeholder="e.g. Learn React"
                 />
             </View>
