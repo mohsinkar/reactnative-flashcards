@@ -2,18 +2,19 @@ import React, { useState } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { lightPurp, white, purple } from '../utils/colors'
+import { white } from '../utils/colors'
 
 const DeckItem = (props) => {
 
     const [deck] = useState(props.deck);
     const navigation = useNavigation();
     return (
-        
-        <View style={styles.item}>
-            <TouchableOpacity onPress={() => navigation.navigate('DeckDetails',{deck: deck})} >
-                <Text style={styles.info}>{deck.name}</Text>
-                <Text style={styles.infoCards}>{deck.cards.length} cards</Text>
+        <View>
+            <TouchableOpacity onPress={() => navigation.navigate('DeckDetails', { deck: deck })} >
+                <View style={styles.item}>
+                    <Text style={styles.info}>{deck.name}</Text>
+                    <Text style={styles.infoCards}>{deck.cards.length} cards</Text>
+                </View>
             </TouchableOpacity>
         </View>
     )
@@ -21,9 +22,9 @@ const DeckItem = (props) => {
 
 const styles = StyleSheet.create({
     item: {
-        backgroundColor: lightPurp,
+        backgroundColor: white,
         borderRadius: Platform.OS === 'ios' ? 16 : 20,
-        padding: 20,
+        padding: 40,
         marginLeft: 15,
         marginRight: 15,
         marginTop: 10,
@@ -36,16 +37,14 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 1,
         alignItems: 'center',
- 
+
     },
     info: {
         fontSize: 25,
         paddingTop: 5,
-        color:white
     },
     infoCards: {
         fontSize: 20,
-        color:white
     }
 
 })

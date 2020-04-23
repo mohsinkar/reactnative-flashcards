@@ -4,7 +4,8 @@ import { getDecksData } from '../utils/helper'
 import { useDispatch, useSelector } from 'react-redux'
 import { receiveDecks } from '../actions/decks'
 import DeckItem from './DeckItem'
-import { white } from '../utils/colors'
+import { white,teal } from '../utils/colors'
+import Message from './HelperComponents/Message'
 
 const Dashboard = () => {
     const dispatch = useDispatch()
@@ -23,13 +24,8 @@ const Dashboard = () => {
 
     return (
         <ScrollView style={{ flex: 1 }} >
-            <View style={styles.item}>
-                <Text adjustsFontSizeToFit={true}
-                    numberOfLines={1}
-                    style={{ textAlignVertical: "center", textAlign: "center", fontSize:50}}>Decks</Text>
-            </View>
             {
-                Object.keys(decks).length === 0 ? <Text> No Decks available</Text> :
+                Object.keys(decks).length === 0 ? <Message message={'No Decks available'} /> :
                     Object.values(decks).map((deck) => {
                         return <DeckItem deck={deck} key={deck.id} />
                     })
@@ -42,7 +38,7 @@ const Dashboard = () => {
 
 const styles = StyleSheet.create({
     item: {
-        backgroundColor: white,
+        backgroundColor: teal,
         borderRadius: Platform.OS === 'ios' ? 16 : 2,
         padding: 20,
         marginLeft: 10,

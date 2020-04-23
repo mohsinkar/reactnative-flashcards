@@ -10,21 +10,21 @@ const DeckDetails = (props) => {
     const [deck] = useState(props.route.params.deck);
 
     return (
-        <View>
+        <View style={{ backgroundColor:white,flex:1 }}>
             <View style={styles.item}>
                 <Text style={styles.info}>{deck.name}</Text>
                 <Text style={styles.infoCards}>{deck.cards.length} cards</Text>
             </View>
-            <View style={styles.spacer}></View>
+           
             <View style={styles.container}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('AddCard'),{deck: deck}}>
+                    onPress={() => navigation.navigate('AddCard', { deck: deck })}>
                     <Text style={styles.text} >Add Card</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.container}>
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Quiz'),{deck: deck}}>
+                    onPress={() => navigation.navigate('Quiz', { deck: deck })}>
                     <Text style={styles.text} >Start Quiz</Text>
                 </TouchableOpacity>
             </View>
@@ -34,13 +34,14 @@ const DeckDetails = (props) => {
 
 const styles = StyleSheet.create({
     spacer: {
-       paddingBottom: 150
+        paddingBottom: 50,
+        backgroundColor:white
     },
     container: {
         borderRadius: Platform.OS === 'ios' ? 16 : 20,
         marginLeft: 50,
         marginRight: 50,
-        marginTop: 10,
+        marginTop: 30,
         borderRadius: 5,
         borderColor: '#ddd',
         borderBottomWidth: 0,
@@ -59,14 +60,10 @@ const styles = StyleSheet.create({
         textAlign: "center",
     },
     item: {
-        backgroundColor: lightPurp,
-        borderRadius: Platform.OS === 'ios' ? 16 : 20,
-        padding: 20,
+        padding: 50,
         marginLeft: 15,
         marginRight: 15,
-        marginTop: 10,
-        borderRadius: 15,
-        borderColor: '#ddd',
+        marginTop: 50,
         borderBottomWidth: 0,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -74,16 +71,15 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 1,
         alignItems: 'center',
- 
+
     },
     info: {
         fontSize: 25,
         paddingTop: 5,
-        color:white
+
     },
     infoCards: {
         fontSize: 20,
-        color:white
     }
 })
 

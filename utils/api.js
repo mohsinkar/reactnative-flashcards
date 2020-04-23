@@ -1,9 +1,9 @@
 import { AsyncStorage } from 'react-native'
 import { DB_KEY } from './helper'
 
-export function addDeck({ deck, key }) {
+export const addDeck = (deck) => {
     return AsyncStorage.mergeItem(DB_KEY, JSON.stringify({
-        [key]: deck
+        [deck.id]: deck
     }))
 }
 

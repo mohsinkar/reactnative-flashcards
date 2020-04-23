@@ -36,7 +36,7 @@ const decks = {
 // Function to reterieve the Decks  from the application storage
 export function getDecksData() {
     return new Promise((res) => {
-        setTimeout(() => res({ ...decks }), 1000)
+        setTimeout(() => res({ ...decks }), 100)
     })
 }
 
