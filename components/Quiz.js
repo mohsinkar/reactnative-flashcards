@@ -38,6 +38,7 @@ function Quiz(props) {
                             <TouchableOpacity onPress={() => {
                                 setCorrectAnswer(correctAnswer + 1)
                                 setQCounter(qCounter + 1)
+                                setDisplayAnswer(false)
                             }
                             }>
                                 <Text style={styles.btnStyleCorrect}>Correct</Text>
@@ -47,6 +48,7 @@ function Quiz(props) {
                             <TouchableOpacity onPress={() => {
                                 setWrongAnswer(wrongAnswer + 1)
                                 setQCounter(qCounter + 1)
+                                setDisplayAnswer(false)
                             }
                             }>
                                 <Text style={styles.btnStyleWrong}>Wrong</Text>

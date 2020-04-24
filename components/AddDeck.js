@@ -41,7 +41,7 @@ const AddDeck = () => {
         addDeckDB(deck) //Call Add Deck API addDeckDB(deck)
         dispatch(addDeck(deck)) // Update Redux
         setDeckName("") //reset 
-        navigation.navigate('DeckDetails', { deck: deck })  //navigate to the deck details
+        navigation.navigate('DeckDetails', { deckid: deck.id })  //navigate to the deck details
     }
 
     return (

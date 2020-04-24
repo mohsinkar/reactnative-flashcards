@@ -35,7 +35,7 @@ const Dashboard = () => {
                         </View>
                         <View style={styles.itemAdd}>
                             <TouchableOpacity onPress={() => navigation.navigate('Add Deck')} >
-                                <Message message={'Add Card'} />
+                                <Message message={'Add Deck'} />
                             </TouchableOpacity>
                         </View>
                     </View>
